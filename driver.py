@@ -13,7 +13,15 @@ def driver():
     # Check
     
     # Create a new board and see if we got lucky
-    b = TileBoard(size, multiple_solutions=True)
+    b = TileBoard(size, multiple_solutions=True,verbose=True)
+
+    #begin custom code CALEB SHARAI
+
+
+
+    #end custom code CALEB SHARAI
+
+    '''
     solved = b.solved()
     
     while not solved:
@@ -44,7 +52,7 @@ def driver():
         solved = b.solved()  # all done?
         
     print("Congratulations, you did it!")
-        
+        '''
         
         
     

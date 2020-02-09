@@ -31,11 +31,38 @@ class TileBoard(Board):
         # initialize parent
         super().__init__(self.boardsize, self.boardsize)
 
+        if (verbose):
+            print("Debug Mode")
+
         # Compute solution states
         # todo:  Set self.goals to a list of solution tuples
         # If multiple_solutions is true, None can be anywhere:
         # [(None,1,2,3,...), (1,None,2,3,...), (1,2,None,3,...)]
         # Otherwise, must be the last square:  [(1,2,3,...,None)]
+
+        # Create a list of solutions first. It's easier. Then convert to tuple.
+        self.goalState = [] #a state of a solvable board
+        self.goals = []     #the list of all solvable boards
+        if (multiple_solutions):
+            for y in range(n+1): #boardsize is 1 larger than n
+                for x in range(n):
+                    if (verbose): print("x",x,"y",y)
+                    if (y == x):
+                        self.goalState.append(None)
+                    self.goalState.append(x + 1)
+                    if (y==n and x==n-1): #special case where the last None needs to be placed
+                        self.goalState.append(None)
+                self.goals.append(tuple(self.goalState))
+                self.goalState.clear()
+        else:
+            #only one solution with none on the end
+            for x in range(n):
+                self.goalState.append(x + 1)
+            self.goalState.append(None)
+            self.goals.append(tuple(self.goalState))
+
+        if (verbose): print(self.goals)
+
 
         # todo:  Determine inital state and make sure that it is solvable
 
