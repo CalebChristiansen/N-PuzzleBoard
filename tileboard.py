@@ -41,34 +41,54 @@ class TileBoard(Board):
         # Otherwise, must be the last square:  [(1,2,3,...,None)]
 
         # Create a list of solutions first. It's easier. Then convert to tuple.
-        self.goalState = [] #a state of a solvable board
+        goalState = [] #a state of a solvable board
         self.goals = []     #the list of all solvable boards
         if (multiple_solutions):
             for y in range(n+1): #boardsize is 1 larger than n
                 for x in range(n):
                     if (verbose): print("x",x,"y",y)
                     if (y == x):
-                        self.goalState.append(None)
-                    self.goalState.append(x + 1)
+                        goalState.append(None)
+                    goalState.append(x + 1)
                     if (y==n and x==n-1): #special case where the last None needs to be placed
-                        self.goalState.append(None)
-                self.goals.append(tuple(self.goalState))
-                self.goalState.clear()
+                        goalState.append(None)
+                self.goals.append(tuple(goalState))
+                goalState.clear()
         else:
             #only one solution with none on the end
             for x in range(n):
-                self.goalState.append(x + 1)
-            self.goalState.append(None)
-            self.goals.append(tuple(self.goalState))
+                goalState.append(x + 1)
+            goalState.append(None)
+            self.goals.append(tuple(goalState))
 
         if (verbose): print(self.goals)
 
 
         # todo:  Determine inital state and make sure that it is solvable
+        self.initalBoard = []
+
+        # check for force_state and if it's solvable
+        if (force_state != None):
+            if (not self.solvable(force_state)):
+                raise ValueError("Check force_state solvability")
+        # Generate random board
+        else:
+            while(True): # a do while loop in python
+                for x in range(n):
+                    self.initalBoard.append(x + 1)
+                self.initalBoard.append(None)
+                random.shuffle(self.initalBoard)
+                if (verbose): print(self.initalBoard)
+
+                if (not self.solvable(self.initalBoard)): break #end while loop
+
 
         # todo:  Populate the board using self.place
         #        It would be wise to track the empty square location as well
         #        as it will make action generation easier
+
+
+
 
     def solvable(self, tiles, verbose=False):
         """solvable - Determines if a puzzle is solvable
