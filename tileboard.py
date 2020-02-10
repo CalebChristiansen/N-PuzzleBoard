@@ -73,20 +73,36 @@ class TileBoard(Board):
                 raise ValueError("Check force_state solvability")
         # Generate random board
         else:
-            while(True): # a do while loop in python
+            while(True): # a do-while loop in python
+                self.initalBoard.clear()
                 for x in range(n):
                     self.initalBoard.append(x + 1)
                 self.initalBoard.append(None)
                 random.shuffle(self.initalBoard)
                 if (verbose): print(self.initalBoard)
 
-                if (not self.solvable(self.initalBoard)): break #end while loop
+                if (self.solvable(self.initalBoard)): break #end while loop
 
 
         # todo:  Populate the board using self.place
         #        It would be wise to track the empty square location as well
         #        as it will make action generation easier
 
+        self.gameBoard = Board(self.boardsize,self.boardsize)
+        self.emptySquare = (None,None) #Row and Column location of empty square
+
+        if (verbose): print(self.gameBoard)
+        counter = 0
+        #make the board using board class
+        for x in range(self.boardsize):     # x will be rows
+            for y in range(self.boardsize): # y will be columns
+                self.gameBoard.place(x,y,self.initalBoard[counter])
+                if (self.initalBoard[counter] == None):
+                    self.emptySquare = (x,y)
+                    print("emptySquare:",self.emptySquare)
+                counter += 1
+
+        if(verbose): print(self.gameBoard)
 
 
 
