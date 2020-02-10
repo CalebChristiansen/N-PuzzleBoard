@@ -13,7 +13,7 @@ def driver():
     # Check
     
     # Create a new board and see if we got lucky
-    b0 = TileBoard(size, multiple_solutions=True,verbose=True)
+    b = TileBoard(size, multiple_solutions=True,verbose=True)
     b1 = TileBoard(size, multiple_solutions=True,verbose=True)
     b2 = TileBoard(size, multiple_solutions=True,force_state=(1,2,3,4,5,6,7,8),verbose=True)
     b3 = TileBoard(size, multiple_solutions=True, force_state=(1, 2, 3, 4, 5, 6, 7, 8), verbose=True)
@@ -27,9 +27,8 @@ def driver():
 
     print(b1.solved())
     b3.move([0, -1])
+    print(b1.get_actions())
 
-
-    '''
     solved = b.solved()
     
     while not solved:
@@ -60,7 +59,7 @@ def driver():
         solved = b.solved()  # all done?
         
     print("Congratulations, you did it!")
-        '''
+
         
         
     

@@ -110,6 +110,9 @@ class TileBoard(Board):
         if(verbose): print(self.gameBoard)
 
 
+    def __str__(self):
+        # fixes the default print statement for this class
+        return str(self.gameBoard)
 
     def solvable(self, tiles, verbose=False):
         """solvable - Determines if a puzzle is solvable
@@ -205,27 +208,53 @@ class TileBoard(Board):
         "Return row column offsets of where the empty tile can be moved"
         #there are 8 possible cases to solve
 
-        #left = (0,-1)
-        #right = (0,1)
-        #up = (-1,0)
-        #down = (1,0)
+        left = [0, -1]
+        right = [0, 1]
+        up = [-1, 0]
+        down = [1, 0]
 
         rowColumnOffsets = []
 
         #1 top left case
         if (self.emptySquare == (0,0)):
-            return [(0,1),(1,0)]
+            return [right,down]
 
         #2 top right case
         if (self.emptySquare == (0,self.boardsize-1)):
-            return [(0,-1),(1,0)]
+            return [left,down]
+
+        #3 bottom left case
+        if (self.emptySquare == (self.boardsize-1,0)):
+            return [up,right]
 
         #4 bottom right case
         if (self.emptySquare == (self.boardsize-1,self.boardsize-1)):
-            return [(-1,0),(0,-1)]
+            print("emptySquare",self.emptySquare)
+            return [left,up]
+
+        #5 top case
+        if (self.emptySquare[0] == 0):
+            return [left,right,down]
+
+        #6 left case
+        if (self.emptySquare[1] == 0):
+            return [up,right,down]
+
+        #7 right case
+        if (self.emptySquare[1] == self.boardsize-1):
+            return [left,down,up]
+
+        #8 Bottom case
+        if (self.emptySquare[0] == self.boardsize-1):
+            return [left,right,up]
+
+        # normal case
+        return [left, right, up, down]
 
 
-        raise NotImplementedError("Return list of valid actions")
+
+
+        #raise NotImplementedError("Return list of valid actions")
 
             
     def move(self, offset):
@@ -234,20 +263,27 @@ class TileBoard(Board):
         newBoard = copy.deepcopy(self)
 
         # four cases
+        left = [0, -1]
+        right = [0, 1]
+        up = [-1, 0]
+        down = [1, 0]
 
         #move left
-        if (offset == [0,-1]):
+        if (offset == left):
             originalRow = newBoard.emptySquare[0]
             originalColumn = newBoard.emptySquare[1]
             leftColumn = originalColumn-1
             itemToSwap = newBoard.gameBoard.get(originalRow, leftColumn)
             newBoard.gameBoard.place(originalRow,originalColumn,itemToSwap)
             newBoard.gameBoard.place(originalRow,leftColumn,None)
-
-
+            newBoard.emptySquare = [originalRow,leftColumn]
 
             if self.verbose: print("NewBoard\n", newBoard.gameBoard)
-            return newBoard
+
+        #move right
+        if (offset == right):
+            print()
+        return newBoard
 
 
         # Hint:  Be sure to use deepcopy
