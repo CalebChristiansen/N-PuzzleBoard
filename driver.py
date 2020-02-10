@@ -13,21 +13,21 @@ def driver():
     # Check
     
     # Create a new board and see if we got lucky
-    b3 = TileBoard(size, multiple_solutions=True,verbose=True)
-    b1 = TileBoard(size, multiple_solutions=True,verbose=True)
-    b2 = TileBoard(size, multiple_solutions=True,force_state=(1,2,3,4,5,6,7,8, None),verbose=True)
-    b = TileBoard(size, multiple_solutions=False, force_state=(1, 2, 3, 4, 5, 6, 7, None, 8), verbose=False)
+    #b3 = TileBoard(size, multiple_solutions=True,verbose=True)
+    #b1 = TileBoard(size, multiple_solutions=True,verbose=True)
+    #b2 = TileBoard(size, multiple_solutions=True,force_state=(1,2,3,4,5,6,7,8, None),verbose=True)
+    b = TileBoard(size, multiple_solutions=False, force_state=(1, 2, 3, 4, 5, 6, None, 7, 8), verbose=False)
 
 
-    if (b3 == b2):
-        print("the boards are equal")
-    else:
-        print("the boards are not equal")
+    #if (b3 == b2):
+    #    print("the boards are equal")
+    #else:
+    #    print("the boards are not equal")
 
 
-    print(b1.solved())
-    b3.move([0, -1])
-    print(b1.get_actions())
+    #print(b1.solved())
+    #b3.move([0, -1])
+    #print(b1.get_actions())
 
     solved = b.solved()
     

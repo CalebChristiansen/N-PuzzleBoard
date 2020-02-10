@@ -37,11 +37,10 @@ class TileBoard(Board):
         # initialize parent
         super().__init__(self.boardsize, self.boardsize)
 
-        if (self.verbose):
-            print("Debug Mode")
+        if (self.verbose): print("Debug Mode")
 
         # Compute solution states
-        # todo:  Set self.goals to a list of solution tuples
+        # Set self.goals to a list of solution tuples
         # If multiple_solutions is true, None can be anywhere:
         # [(None,1,2,3,...), (1,None,2,3,...), (1,2,None,3,...)]
         # Otherwise, must be the last square:  [(1,2,3,...,None)]
@@ -70,13 +69,13 @@ class TileBoard(Board):
         if (self.verbose): print(self.goals)
 
 
-        # todo:  Determine inital state and make sure that it is solvable
+        # Determine inital state and make sure that it is solvable
         self.initalBoard = []
 
         # check for force_state and if it's solvable
         if (force_state != None):
             self.initalBoard = list(force_state)
-            #self.initalBoard.append(None)
+            #self.initalBoard.append(None) #Depending on force state format, this could be needed
             if (not self.solvable(force_state)):
                 raise ValueError("Check force_state solvability")
         # Generate random board
@@ -89,10 +88,10 @@ class TileBoard(Board):
                 self.initalBoard.append(None)
                 if (self.verbose): print(self.initalBoard)
 
-                if (self.solvable(self.initalBoard)): break #end while loop
+                if (self.solvable(self.initalBoard)): break #end do-while loop
 
 
-        # todo:  Populate the board using self.place
+        #        Populate the board using self.place
         #        It would be wise to track the empty square location as well
         #        as it will make action generation easier
 
@@ -185,7 +184,7 @@ class TileBoard(Board):
     def __eq__(self, other):
         "__eq__ - Check if objects equal:  a == b"
 
-        # todo:  Determine if two board configurations are equivalent
+        # Determine if two board configurations are equivalents
         #raise NotImplementedError("Check ==")
 
         return self.gameBoard.__repr__() == other
@@ -221,7 +220,7 @@ class TileBoard(Board):
 
         rowColumnOffsets = []
 
-        print("emptySquare", self.emptySquare, "=?")
+        if self.verbose: print("emptySquare", self.emptySquare, "=?")
 
         #1 top left case
         if (self.emptySquare == (0,0)):
@@ -234,7 +233,7 @@ class TileBoard(Board):
         #3 bottom left case
         if self.verbose: print(self.emptySquare,"=?=",self.boardsize-1,0)
         if (self.emptySquare == (self.boardsize-1,0)):
-            return [up,right]
+            return [right,up]
 
         #4 bottom right case
         if (self.emptySquare == (self.boardsize-1,self.boardsize-1)):
@@ -246,11 +245,11 @@ class TileBoard(Board):
 
         #6 left case
         if (self.emptySquare[1] == 0):
-            return [up,right,down]
+            return [right,up,down]
 
         #7 right case
         if (self.emptySquare[1] == self.boardsize-1):
-            return [left,down,up]
+            return [left,up,down]
 
         #8 Bottom case
         if (self.emptySquare[0] == self.boardsize-1):
