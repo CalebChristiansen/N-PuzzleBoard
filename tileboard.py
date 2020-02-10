@@ -70,7 +70,7 @@ class TileBoard(Board):
         # check for force_state and if it's solvable
         if (force_state != None):
             self.initalBoard = list(force_state)
-            self.initalBoard.append(None)
+            #self.initalBoard.append(None)
             if (not self.solvable(force_state)):
                 raise ValueError("Check force_state solvability")
         # Generate random board
@@ -104,7 +104,7 @@ class TileBoard(Board):
                 self.gameBoard.place(x,y,self.initalBoard[counter])
                 if (self.initalBoard[counter] == None):
                     self.emptySquare = (x,y)
-                    print("emptySquare:",self.emptySquare)
+                    if self.verbose: print("emptySquare:",self.emptySquare)
                 counter += 1
 
         if(verbose): print(self.gameBoard)
@@ -215,6 +215,8 @@ class TileBoard(Board):
 
         rowColumnOffsets = []
 
+        print("emptySquare", self.emptySquare, "=?")
+
         #1 top left case
         if (self.emptySquare == (0,0)):
             return [right,down]
@@ -224,12 +226,12 @@ class TileBoard(Board):
             return [left,down]
 
         #3 bottom left case
+        if self.verbose: print(self.emptySquare,"=?=",self.boardsize-1,0)
         if (self.emptySquare == (self.boardsize-1,0)):
             return [up,right]
 
         #4 bottom right case
         if (self.emptySquare == (self.boardsize-1,self.boardsize-1)):
-            print("emptySquare",self.emptySquare)
             return [left,up]
 
         #5 top case
@@ -276,7 +278,7 @@ class TileBoard(Board):
             itemToSwap = newBoard.gameBoard.get(originalRow, leftColumn)
             newBoard.gameBoard.place(originalRow,originalColumn,itemToSwap)
             newBoard.gameBoard.place(originalRow,leftColumn,None)
-            newBoard.emptySquare = [originalRow,leftColumn]
+            newBoard.emptySquare = (originalRow,leftColumn)
 
             if self.verbose: print("NewBoard\n", newBoard.gameBoard)
 
@@ -288,7 +290,7 @@ class TileBoard(Board):
             itemToSwap = newBoard.gameBoard.get(originalRow, rightColumn)
             newBoard.gameBoard.place(originalRow, originalColumn, itemToSwap)
             newBoard.gameBoard.place(originalRow, rightColumn, None)
-            newBoard.emptySquare = [originalRow, rightColumn]
+            newBoard.emptySquare = (originalRow, rightColumn)
 
         #move up
         elif (offset == up):
@@ -298,7 +300,7 @@ class TileBoard(Board):
             itemToSwap = newBoard.gameBoard.get(upRow, originalColumn)
             newBoard.gameBoard.place(originalRow, originalColumn, itemToSwap)
             newBoard.gameBoard.place(upRow, originalColumn, None)
-            newBoard.emptySquare = [upRow, originalColumn]
+            newBoard.emptySquare = (upRow, originalColumn)
 
         #move down
         elif (offset == down):
@@ -308,7 +310,7 @@ class TileBoard(Board):
             itemToSwap = newBoard.gameBoard.get(downRow, originalColumn)
             newBoard.gameBoard.place(originalRow, originalColumn, itemToSwap)
             newBoard.gameBoard.place(downRow, originalColumn, None)
-            newBoard.emptySquare = [downRow, originalColumn]
+            newBoard.emptySquare = (downRow, originalColumn)
 
         return newBoard
 
