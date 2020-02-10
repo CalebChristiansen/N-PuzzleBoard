@@ -23,6 +23,12 @@ def driver():
     else:
         print("the boards are not equal")
 
+    print("b3",b2)
+    print("actions",b1.get_actions())
+    b3.move([0,-1])
+    print(b3)
+
+
 
     '''
     solved = b.solved()

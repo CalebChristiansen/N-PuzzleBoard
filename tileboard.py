@@ -176,54 +176,26 @@ class TileBoard(Board):
     def __eq__(self, other):
         "__eq__ - Check if objects equal:  a == b"
 
-        if self.state_tuple() == other.state_tuple():
-            return True
-        print(other.state_tuple,"!=",self.state_tuple)
-        return False
-
         # todo:  Determine if two board configurations are equivalent
         #raise NotImplementedError("Check ==")
 
-        #if self.verbose:
-        #    print("other:\n",other)
+        return self.gameBoard.__repr__() == other
 
-        #if (self.values == other):
-        #    print("True")
+        ## ORIGINAL IDEA Compares tuples
+        # if self.state_tuple() == other.state_tuple():
         #    return True
-        #print("false")
-        #return False
-
-        '''
-        #Check sizes match
-        if (other.get_rows() != self.gameBoard.get_rows()):
-            if self.verbose: print("rows not equal")
-            return False
-        if (other.get_cols() != self.gameBoard.get_cols()):
-            if self.verbose: print("cols not equal")
-            return False
-
-        #Check for element equality
-        for x in range(self.boardsize):     # x will be rows
-            for y in range(self.boardsize): # y will be columns
-                if self.gameBoard.get(x,y) != (other.get(x,y)):
-                    if self.verbose: print(self.gameBoard.get(x,y)," != ",(other.get(x,y)))
-                    return False
-
-        return True
-        '''
-
+        # if self.verbose: print(other.state_tuple,"!=",self.state_tuple)
+        # return False
 
 
     def state_tuple(self):
         "state_tuple - Return board state as a single tuple"
-        list = []
+        boardState = []
         for x in range(self.boardsize):         # x will be rows
             for y in range(self.boardsize):     # y will be columns
-                list.append(self.gameBoard.get(x,y))
-                if self.verbose:
-                    print("x",x,"y",y,"=")
-                    print(self.gameBoard.get(x,y))
-        return tuple(list)
+                boardState.append(self.gameBoard.get(x,y))
+                if self.verbose: print("x",x,"y",y,"=",self.gameBoard.get(x,y))
+        return tuple(boardState)
 
 
         #raise NotImplementedError(
@@ -231,12 +203,47 @@ class TileBoard(Board):
 
     def get_actions(self):
         "Return row column offsets of where the empty tile can be moved"
+        #there are 8 possible cases to solve
+
+        #left = (0,-1)
+        #right = (0,1)
+        #up = (-1,0)
+        #down = (1,0)
+
+        rowColumnOffsets = []
+
+        #1 top left case
+        if (self.emptySquare == (0,0)):
+            return [(0,1),(1,0)]
+
+        #2 top right case
+        if (self.emptySquare == (0,self.boardsize-1)):
+            return [(0,-1),(1,0)]
+
+        #4 bottom right case
+        if (self.emptySquare == (self.boardsize-1,self.boardsize-1)):
+            return [(-1,0),(0,-1)]
+
 
         raise NotImplementedError("Return list of valid actions")
 
             
     def move(self, offset):
         "move - Move the empty space by [delta_row, delta_col] and return new board"
+        print("self",self.gameBoard)
+        newBoard = copy.deepcopy(self)
+
+        # four cases
+
+        #move left
+        if (offset == [0,-1]):
+            originalRow = newBoard.emptySquare[0]
+            originalColumn = newBoard.emptySquare[1]
+            leftColumn = originalColumn-1
+            newBoard.place(originalRow,originalColumn,newBoard.get(originalRow,leftColumn))
+            newBoard.place(originalRow,leftColumn,None)
+            return newBoard
+
 
         # Hint:  Be sure to use deepcopy
         raise NotImplementedError("Return new TileBoard with action applied")
