@@ -230,7 +230,7 @@ class TileBoard(Board):
             
     def move(self, offset):
         "move - Move the empty space by [delta_row, delta_col] and return new board"
-        print("self",self.gameBoard)
+        if self.verbose: print("self",self.gameBoard)
         newBoard = copy.deepcopy(self)
 
         # four cases
@@ -240,8 +240,13 @@ class TileBoard(Board):
             originalRow = newBoard.emptySquare[0]
             originalColumn = newBoard.emptySquare[1]
             leftColumn = originalColumn-1
-            newBoard.place(originalRow,originalColumn,newBoard.get(originalRow,leftColumn))
-            newBoard.place(originalRow,leftColumn,None)
+            itemToSwap = newBoard.gameBoard.get(originalRow, leftColumn)
+            newBoard.gameBoard.place(originalRow,originalColumn,itemToSwap)
+            newBoard.gameBoard.place(originalRow,leftColumn,None)
+
+
+
+            if self.verbose: print("NewBoard\n", newBoard.gameBoard)
             return newBoard
 
 
@@ -251,5 +256,13 @@ class TileBoard(Board):
     
     def solved(self):
         "solved - Is the puzzle solved?  Returns boolean"
+
+        #Does the current state exist in our list of goals?
+        for goal in self.goals:
+            if goal == self.state_tuple():
+                return True
+        return False
+
+
 
         raise NotImplementedError("Puzzle in solved state?")

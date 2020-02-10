@@ -18,16 +18,15 @@ def driver():
     b2 = TileBoard(size, multiple_solutions=True,force_state=(1,2,3,4,5,6,7,8),verbose=True)
     b3 = TileBoard(size, multiple_solutions=True, force_state=(1, 2, 3, 4, 5, 6, 7, 8), verbose=True)
 
+
     if (b3 == b2):
         print("the boards are equal")
     else:
         print("the boards are not equal")
 
-    print("b3",b2)
-    print("actions",b1.get_actions())
-    b3.move([0,-1])
-    print(b3)
 
+    print(b1.solved())
+    b3.move([0, -1])
 
 
     '''
