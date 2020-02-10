@@ -16,7 +16,7 @@ def driver():
     b3 = TileBoard(size, multiple_solutions=True,verbose=True)
     b1 = TileBoard(size, multiple_solutions=True,verbose=True)
     b2 = TileBoard(size, multiple_solutions=True,force_state=(1,2,3,4,5,6,7,8, None),verbose=True)
-    b = TileBoard(size, multiple_solutions=False, force_state=(1, 2, 3, 4, 5, 6, 7, None, 8), verbose=True)
+    b = TileBoard(size, multiple_solutions=False, force_state=(1, 2, 3, 4, 5, 6, 7, None, 8), verbose=False)
 
 
     if (b3 == b2):

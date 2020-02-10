@@ -1,3 +1,9 @@
+"""
+Program 1
+Sharai Castor
+Caleb Christiansen
+"""
+
 import random
 import copy
 import math
@@ -61,7 +67,7 @@ class TileBoard(Board):
             goalState.append(None)
             self.goals.append(tuple(goalState))
 
-        if (verbose): print(self.goals)
+        if (self.verbose): print(self.goals)
 
 
         # todo:  Determine inital state and make sure that it is solvable
@@ -81,7 +87,7 @@ class TileBoard(Board):
                     self.initalBoard.append(x + 1)
                 random.shuffle(self.initalBoard)
                 self.initalBoard.append(None)
-                if (verbose): print(self.initalBoard)
+                if (self.verbose): print(self.initalBoard)
 
                 if (self.solvable(self.initalBoard)): break #end while loop
 
@@ -93,12 +99,12 @@ class TileBoard(Board):
         self.gameBoard = Board(self.boardsize,self.boardsize)
         self.emptySquare = (None,None) #Row and Column location of empty square
 
-        if (verbose): print("gameboard:\n",self.gameBoard)
+        if (self.verbose): print("gameboard:\n",self.gameBoard)
         counter = 0
         #make the board using board class
         for x in range(self.boardsize):     # x will be rows
             for y in range(self.boardsize): # y will be columns
-                if verbose:
+                if self.verbose:
                     print("counter",counter,"x",x,"y",y)
                     print("self.boardsize",self.boardsize)
                 self.gameBoard.place(x,y,self.initalBoard[counter])
@@ -107,7 +113,7 @@ class TileBoard(Board):
                     if self.verbose: print("emptySquare:",self.emptySquare)
                 counter += 1
 
-        if(verbose): print(self.gameBoard)
+        if(self.verbose): print(self.gameBoard)
 
 
     def __str__(self):
