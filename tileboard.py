@@ -31,7 +31,7 @@ class TileBoard(Board):
         # initialize parent
         super().__init__(self.boardsize, self.boardsize)
 
-        if (verbose):
+        if (self.verbose):
             print("Debug Mode")
 
         # Compute solution states
@@ -46,7 +46,7 @@ class TileBoard(Board):
         if (multiple_solutions):
             for y in range(n+1): #boardsize is 1 larger than n
                 for x in range(n):
-                    if (verbose): print("x",x,"y",y)
+                    if (self.verbose): print("x",x,"y",y)
                     if (y == x):
                         goalState.append(None)
                     goalState.append(x + 1)
@@ -77,8 +77,8 @@ class TileBoard(Board):
                 self.initalBoard.clear()
                 for x in range(n):
                     self.initalBoard.append(x + 1)
-                self.initalBoard.append(None)
                 random.shuffle(self.initalBoard)
+                self.initalBoard.append(None)
                 if (verbose): print(self.initalBoard)
 
                 if (self.solvable(self.initalBoard)): break #end while loop
@@ -172,7 +172,29 @@ class TileBoard(Board):
         "__eq__ - Check if objects equal:  a == b"
 
         # todo:  Determine if two board configurations are equivalent
-        raise NotImplementedError("Check ==")
+        #raise NotImplementedError("Check ==")
+
+        if self.verbose:
+            print("other:\n",other)
+
+        #Check sizes match
+        if (other.get_rows() != self.gameBoard.get_rows()):
+            if self.verbose: print("rows not equal")
+            return False
+        if (other.get_cols() != self.gameBoard.get_cols()):
+            if self.verbose: print("cols not equal")
+            return False
+
+        #Check for element equality
+        for x in range(self.boardsize):     # x will be rows
+            for y in range(self.boardsize): # y will be columns
+                if self.gameBoard.get(x,y) != (other.get(x,y)):
+                    if self.verbose: print(self.gameBoard.get(x,y)," != ",(other.get(x,y)))
+                    return False
+
+        return True
+
+
 
     def state_tuple(self):
         "state_tuple - Return board state as a single tuple"

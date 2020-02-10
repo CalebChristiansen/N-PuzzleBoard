@@ -13,13 +13,14 @@ def driver():
     # Check
     
     # Create a new board and see if we got lucky
-    b = TileBoard(size, multiple_solutions=True,verbose=True)
+    b0 = TileBoard(size, multiple_solutions=True,verbose=True)
+    b1 = TileBoard(size, multiple_solutions=True,verbose=True)
+    b2 = b1
 
-    #begin custom code CALEB SHARAI
-
-
-
-    #end custom code CALEB SHARAI
+    if (b1 == b2):
+        print("the boards are equal")
+    else:
+        print("the boards are not equal")
 
     '''
     solved = b.solved()
