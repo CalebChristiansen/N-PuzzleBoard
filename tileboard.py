@@ -281,8 +281,35 @@ class TileBoard(Board):
             if self.verbose: print("NewBoard\n", newBoard.gameBoard)
 
         #move right
-        if (offset == right):
-            print()
+        elif (offset == right):
+            originalRow = newBoard.emptySquare[0]
+            originalColumn = newBoard.emptySquare[1]
+            rightColumn = originalColumn + 1
+            itemToSwap = newBoard.gameBoard.get(originalRow, rightColumn)
+            newBoard.gameBoard.place(originalRow, originalColumn, itemToSwap)
+            newBoard.gameBoard.place(originalRow, rightColumn, None)
+            newBoard.emptySquare = [originalRow, rightColumn]
+
+        #move up
+        elif (offset == up):
+            originalRow = newBoard.emptySquare[0]
+            originalColumn = newBoard.emptySquare[1]
+            upRow = originalRow - 1
+            itemToSwap = newBoard.gameBoard.get(upRow, originalColumn)
+            newBoard.gameBoard.place(originalRow, originalColumn, itemToSwap)
+            newBoard.gameBoard.place(upRow, originalColumn, None)
+            newBoard.emptySquare = [upRow, originalColumn]
+
+        #move down
+        elif (offset == down):
+            originalRow = newBoard.emptySquare[0]
+            originalColumn = newBoard.emptySquare[1]
+            downRow = originalRow + 1
+            itemToSwap = newBoard.gameBoard.get(downRow, originalColumn)
+            newBoard.gameBoard.place(originalRow, originalColumn, itemToSwap)
+            newBoard.gameBoard.place(downRow, originalColumn, None)
+            newBoard.emptySquare = [downRow, originalColumn]
+
         return newBoard
 
 

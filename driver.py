@@ -13,10 +13,10 @@ def driver():
     # Check
     
     # Create a new board and see if we got lucky
-    b = TileBoard(size, multiple_solutions=True,verbose=True)
+    b3 = TileBoard(size, multiple_solutions=True,verbose=True)
     b1 = TileBoard(size, multiple_solutions=True,verbose=True)
     b2 = TileBoard(size, multiple_solutions=True,force_state=(1,2,3,4,5,6,7,8),verbose=True)
-    b3 = TileBoard(size, multiple_solutions=True, force_state=(1, 2, 3, 4, 5, 6, 7, 8), verbose=True)
+    b = TileBoard(size, multiple_solutions=True, force_state=(1, 2, 3, 4, 5, 6, 7, 8), verbose=True)
 
 
     if (b3 == b2):
