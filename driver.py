@@ -15,12 +15,14 @@ def driver():
     # Create a new board and see if we got lucky
     b0 = TileBoard(size, multiple_solutions=True,verbose=True)
     b1 = TileBoard(size, multiple_solutions=True,verbose=True)
-    b2 = b1
+    b2 = TileBoard(size, multiple_solutions=True,force_state=(1,2,3,4,5,6,7,8),verbose=True)
+    b3 = TileBoard(size, multiple_solutions=True, force_state=(1, 2, 3, 4, 5, 6, 7, 8), verbose=True)
 
-    if (b1 == b2):
+    if (b3 == b2):
         print("the boards are equal")
     else:
         print("the boards are not equal")
+
 
     '''
     solved = b.solved()

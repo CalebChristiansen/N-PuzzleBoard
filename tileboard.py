@@ -69,6 +69,8 @@ class TileBoard(Board):
 
         # check for force_state and if it's solvable
         if (force_state != None):
+            self.initalBoard = list(force_state)
+            self.initalBoard.append(None)
             if (not self.solvable(force_state)):
                 raise ValueError("Check force_state solvability")
         # Generate random board
@@ -91,11 +93,14 @@ class TileBoard(Board):
         self.gameBoard = Board(self.boardsize,self.boardsize)
         self.emptySquare = (None,None) #Row and Column location of empty square
 
-        if (verbose): print(self.gameBoard)
+        if (verbose): print("gameboard:\n",self.gameBoard)
         counter = 0
         #make the board using board class
         for x in range(self.boardsize):     # x will be rows
             for y in range(self.boardsize): # y will be columns
+                if verbose:
+                    print("counter",counter,"x",x,"y",y)
+                    print("self.boardsize",self.boardsize)
                 self.gameBoard.place(x,y,self.initalBoard[counter])
                 if (self.initalBoard[counter] == None):
                     self.emptySquare = (x,y)
@@ -171,12 +176,24 @@ class TileBoard(Board):
     def __eq__(self, other):
         "__eq__ - Check if objects equal:  a == b"
 
+        if self.state_tuple() == other.state_tuple():
+            return True
+        print(other.state_tuple,"!=",self.state_tuple)
+        return False
+
         # todo:  Determine if two board configurations are equivalent
         #raise NotImplementedError("Check ==")
 
-        if self.verbose:
-            print("other:\n",other)
+        #if self.verbose:
+        #    print("other:\n",other)
 
+        #if (self.values == other):
+        #    print("True")
+        #    return True
+        #print("false")
+        #return False
+
+        '''
         #Check sizes match
         if (other.get_rows() != self.gameBoard.get_rows()):
             if self.verbose: print("rows not equal")
@@ -193,14 +210,24 @@ class TileBoard(Board):
                     return False
 
         return True
+        '''
 
 
 
     def state_tuple(self):
         "state_tuple - Return board state as a single tuple"
+        list = []
+        for x in range(self.boardsize):         # x will be rows
+            for y in range(self.boardsize):     # y will be columns
+                list.append(self.gameBoard.get(x,y))
+                if self.verbose:
+                    print("x",x,"y",y,"=")
+                    print(self.gameBoard.get(x,y))
+        return tuple(list)
 
-        raise NotImplementedError(
-            "You must create a tuple based on the board state")
+
+        #raise NotImplementedError(
+        #    "You must create a tuple based on the board state")
 
     def get_actions(self):
         "Return row column offsets of where the empty tile can be moved"
